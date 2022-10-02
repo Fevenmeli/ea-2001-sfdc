@@ -1,0 +1,15 @@
+#%RAML 1.0 ResourceType
+post:
+    description: This is post method to create new organization data to OSVC 
+    is:
+    -  clientCredential 
+    body:
+      application/json:
+        type: postOrganizationsRequestDataType
+        example: !include ../../example/request/postOrganizationsRequest.json
+    responses:
+      201:
+        body:
+          application/json:
+            type: postOrganizationsresponseDataType
+            example: !include ../../example/response/postOrganizationsResponse.json
