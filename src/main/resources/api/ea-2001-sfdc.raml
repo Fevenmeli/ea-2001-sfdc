@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: ea-2001-sfdc experience API Facing SFDC incoming request
+mediaType: 
+- application/json
+description: This Experience API interacts with multiple  system/protocol  using HTTP protocol
+protocols:
+  - HTTP
+version: v1
+
+#change Log
+#Created By Belay on 02 October 2022 added POST/Organizaition Resources #CIGNIS-6
+
+traits:
+  clientCredential: !include library/traits/clientCredential.raml
+
+resourceTypes:
+  organizationsResourceType: !include library/resourceTypes/organizations.raml 
+
+types:
+  postOrganizationsRequestDataType: !include library/dataType/request/postRequestOrganizationsDataType.raml
+  postOrganizationsresponseDataType : !include library/dataType/response/postResponseOrganizationsDataType.raml
+
+/organizations:
+  type:
+    organizationsResourceType

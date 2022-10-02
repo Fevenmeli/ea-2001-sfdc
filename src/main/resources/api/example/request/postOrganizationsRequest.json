@@ -1,0 +1,17 @@
+
+  {"organizations":
+  
+    {
+      "orgName" : "Underwriters Laboratories",
+      "orgId" : 63857,
+      "status" : 1,
+      "timeZone" : "America/New_York",
+      "primaryAddress1" : "12 Laboratory Dr",
+      "primaryAddress2" : "12 Laboratory Dr Po Box 13995",
+      "primaryAddress3" : "",
+      "city" : "DURHAM",
+      "state" : "NC",
+      "postalCode" : "27709-0163",
+      "country" : "US",
+      "activeContracts" : "Y"
+      }}
