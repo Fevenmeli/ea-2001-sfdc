@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="postOrganizationSubFlow" doc:id="205dc049-e442-45ee-be23-2d5765fec93d" >
+		<logger level="INFO" doc:name="info: flowStartLogger" doc:id="d98718a6-e4da-48ce-bba0-467fc2e648cd" message="postOrganizationSubFlow started"/>
+		<ee:transform doc:name="Transform Message" doc:id="4382c737-1927-4c64-9964-14cdb1b46867" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "name" : "Underwriters Laboratories",
+  "sfdcId" : 63857,
+  "acctStatus" : "Active",
+  "timeZone" : "America/New_York",
+  "address1" : "12 Laboratory Dr",
+  "address2" : "12 Laboratory Dr Po Box 13995",
+  "address3" : "",
+  "city" : "DURHAM",
+  "state" : "NC",
+  "postalCode" : "27709-0163",
+  "country" : "US",
+  "activeContracts" : true
+  }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request to SA1001 post organization" doc:id="24d868d8-aed1-4ca7-9b8b-2d6e7100e78b" path="/organizations" config-ref="sa1001HttpRequestConfiguration" responseTimeout="300000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_name" : "abc",
+	"client_secret" : "abc"
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="info: flowEndLogger" doc:id="2582920e-449f-42b1-89c5-abdb5456de42" message="postOrganizationSubFlow Ended"/>
+	</sub-flow>
+</mule>

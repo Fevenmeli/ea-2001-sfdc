@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <http:listener-config name="ea-2001-sfdc-httpListenerConfig" basePath="/api/exp/fsdc/v1">
+     <http:listener-connection host="0.0.0.0" port="8081" />
+     </http:listener-config>
+    <apikit:config name="ea-2001-sfdc-config" api="ea-2001-sfdc.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<http:request-config name="sa1001HttpRequestConfiguration" doc:name="HTTP Request configuration" doc:id="78e24ef6-ce83-4ee6-b748-5456dc1c8088" basePath="/api/sys/osvc/v1" >
+		<http:request-connection host="localhost" port="8082" />
+	</http:request-config>  
+
+</mule>
