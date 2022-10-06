@@ -10,7 +10,17 @@
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
             </http:error-response>
         </http:listener>
-        <apikit:router config-ref="ea-2001-sfdc-config" />
+        <ee:transform doc:name="Transform Message" doc:id="c868204b-672d-4b74-bb14-b099ebec57b7" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="transactionId" ><![CDATA[%dw 2.0
+output application/java
+---
+app.name ++ "_" ++ correlationId]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<apikit:router config-ref="ea-2001-sfdc-config" />
         <error-handler ref="globalErrorHandler" />
     </flow>
     <flow name="ea-2001-sfdc-console">
@@ -27,6 +37,16 @@
         <error-handler ref="consoleErrorHandler" />
     </flow>
     <flow name="post:\organizations:application\json:ea-2001-sfdc-config">
+		<ee:transform doc:name="Transform Message" doc:id="d0c5e589-a959-4749-ad91-78c9916fcb9e" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="transactionId" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.transactionId ++ "I131_Organizations"]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
 		<flow-ref doc:name="Flow Reference to postOrganizationSubFlow" doc:id="f49cd7c2-648d-47f6-8412-580e561971ea" name="postOrganizationSubFlow"/>
     </flow>
 </mule>

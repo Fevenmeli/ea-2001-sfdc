@@ -13,18 +13,18 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-  "name" : "Underwriters Laboratories",
-  "sfdcId" : 63857,
-  "acctStatus" : "Active",
-  "timeZone" : "America/New_York",
-  "address1" : "12 Laboratory Dr",
-  "address2" : "12 Laboratory Dr Po Box 13995",
-  "address3" : "",
-  "city" : "DURHAM",
-  "state" : "NC",
-  "postalCode" : "27709-0163",
-  "country" : "US",
-  "activeContracts" : true
+    "name" : payload.organizations.orgName,
+    "sfdcId" : payload.organizations.orgId,
+    "acctStatus" : if (payload.organizations.status ==1) "Active" else "Inactive",
+    "timeZone" : payload.organizations.timeZone,
+    "address1" : payload.organizations.primaryAddress1,
+    "address2" : payload.organizations.primaryAddress2,
+    "address3" : payload.organizations.primaryAddress3,
+    "city" : payload.organizations.city,
+    "state" : payload.organizations.state,
+    "postalCode" : payload.organizations.postalCode,
+    "country" : payload.organizations.country,
+    "activeContracts" : (if(payload.organizations.activeContracts == "Y") true else false) as Boolean default true
   }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
@@ -32,8 +32,9 @@ output application/json
 			<http:headers ><![CDATA[#[output application/java
 ---
 {
-	"client_name" : "abc",
-	"client_secret" : "abc"
+	"client_name":"abc",
+	"client_secret":"abc",
+	"transactionId":vars.transactionId
 }]]]></http:headers>
 		</http:request>
 		<logger level="INFO" doc:name="info: flowEndLogger" doc:id="2582920e-449f-42b1-89c5-abdb5456de42" message="postOrganizationSubFlow Ended"/>
